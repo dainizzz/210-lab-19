@@ -8,7 +8,6 @@
 #include <vector>
 using namespace std;
 
-const int WIDTH = 20;
 // The text file has three reviews per movie
 const int NUM_REVIEWS = 3;
 
@@ -23,16 +22,19 @@ struct Node {
 };
 
 class Movie {
+	// The default access specifier for classes is private, so private: isn't necessary here
 	string title;
 	Node *reviewsHead;
-
 public:
 	// The default constructor sets the head node of the reviews linked list to nullptr
 	Movie() { reviewsHead = nullptr; }
+
+	// Getters and setters
 	string getTitle() const { return title; }
 	Node *getReviews() const { return reviewsHead; }
 	void setTitle(string title) { this->title = title; }
 
+	// No setter for reviewsHead since addReview() modifies that pointer as more nodes are added
 	void addReview(string comment) {
 		Node *newNode = new Node();
 		newNode->comment = comment;
@@ -45,16 +47,16 @@ public:
 
 	void displayMovieInfo() {
 		static int movieNum = 1;
-		cout << "MOVIE #" << movieNum++ << endl;
-		cout << "Title: " << title << endl;
-		cout << "Movie reviews: " << endl;
+		cout << "Movie #" << movieNum++ << ": " << title << endl;
+		cout << "Reviews: " << endl;
 		Node *cur = reviewsHead;
 		int reviewNum = 1;
 		while (cur) {
-			cout << "\tReview #" << reviewNum++ << ": " << setprecision(2) << cur->rating << ": " <<
+			cout << "\t> Review #" << reviewNum++ << ": " << setprecision(2) << cur->rating << ": " <<
 					cur->comment << endl;
 			cur = cur->next;
 		}
+		cout << endl;
 	}
 };
 
@@ -83,11 +85,10 @@ int main() {
 		return 1;
 	}
 
-	cout << "Movie data added successfully! Outputting movie data..." << endl;
+	cout << "Movie data added successfully! Outputting movie data..." << endl << endl;
 	for (Movie movie: movies) {
 		movie.displayMovieInfo();
 	}
-
 
 	return 0;
 }
