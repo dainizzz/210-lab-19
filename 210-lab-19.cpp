@@ -8,6 +8,7 @@
 #include <vector>
 using namespace std;
 
+const int WIDTH = 20;
 // The text file has three reviews per movie
 const int NUM_REVIEWS = 3;
 
@@ -44,14 +45,14 @@ public:
 
 	void displayMovieInfo() {
 		static int movieNum = 1;
-		cout << "MOVIE #" << movieNum++ << ":" << endl;
+		cout << "MOVIE #" << movieNum++ << endl;
 		cout << "Title: " << title << endl;
 		cout << "Movie reviews: " << endl;
 		Node *cur = reviewsHead;
 		int reviewNum = 1;
 		while (cur) {
-			cout << "\t> Review #" << reviewNum++ << ": " << setprecision(2) << cur->rating << ": " << cur->comment <<
-					endl;
+			cout << "\tReview #" << reviewNum++ << ": " << setprecision(2) << cur->rating << ": " <<
+					cur->comment << endl;
 			cur = cur->next;
 		}
 	}
