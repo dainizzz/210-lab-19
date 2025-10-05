@@ -1,9 +1,6 @@
 // COMSC-210 | Lab 19 | Dainiz Almazan
 // IDE used: CLion
 
-// automate code from lab 18 so that it reads comments from an external file and
-// the movie rating is a random double (1 decimal place) between 1.0 and 5.0
-// write a driver/demo program that has at least four Movie objects, each with at least 3 reviews
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -16,18 +13,28 @@ struct Node {
 
 class Movie {
 	string title;
-	Node* reviews;
+	Node* reviewsHead;
 public:
-	// TODO: add getters and setters
+	string getTitle() const { return title;}
+	Node* getReviews() const {return reviewsHead;}
+	void setTitle(string title) { this->title = title;}
+	void addReview(string comment) {
+		// Creating a new Node with the values provided by the user
+		Node *newNode = new Node();
+		newNode->comment = comment;
+		newNode->rating; //the movie rating is a random double (1 decimal place) between 1.0 and 5.0
+		// Setting newNode->next to reviewsHead to put newNode at the front of the linked list
+		newNode->next = reviewsHead;
+		// Setting reviewsHead to newNode so that the head pointer is pointing to the correct node
+		reviewsHead = newNode;
+	}
 };
-
-// addNodeToHead() adds a new Node with the rating and comment values provided to the front of a linked list and sets the head to be the new node
-// arguments: the head Node of a linked list, a double rating, a string comment
-// returns: nothing
-void addNodeToHead(Node *&, double, string);
 
 
 int main() {
+	// automate code from lab 18 so that it reads comments from an external file and
+	// write a driver/demo program that has at least four Movie objects, each with at least 3 reviews
+
 	// Initializing variables
 	vector<Movie> movies;
 
@@ -62,15 +69,4 @@ int main() {
 	cout << "\t> Average: " << total / count << endl;
 
 	return 0;
-}
-
-void addNodeToHead(Node *&head, double rating, string comment) {
-	// Creating a new Node with the values provided by the user
-	Node *newNode = new Node();
-	newNode->comment = comment;
-	newNode->rating = rating;
-	// Setting newNode->next to head to put newNode in front of head in the linked list
-	newNode->next = head;
-	// Setting head to newNode so that when we use the head pointer it's pointing to the correct node
-	head = newNode;
 }
