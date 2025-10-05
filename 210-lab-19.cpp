@@ -45,7 +45,8 @@ public:
 		reviewsHead = newNode;
 	}
 
-	// Because this fu
+	// displayMovieInfo() is used instead of providing getters for the Movie class since the driver program doesn't need
+	// to do anything with the Movie data except outputting it
 	void displayMovieInfo() {
 		static int movieNum = 1;
 		cout << "Movie #" << movieNum++ << ": " << title << endl;
@@ -71,17 +72,22 @@ int main() {
 	ifstream infile;
 	infile.open("movieReviews.txt");
 	if (infile.good()) {
+		// In movieReviews.txt, the movie title is followed by three reviews so this code first reads the movie title
+		// and stores it in tempTitle
 		while (getline(infile, tempTitle)) {
 			Movie tempMovie;
 			tempMovie.setTitle(tempTitle);
+			// The 3 (i.e. NUM_REVIEWS) consequent lines in movieReviews.txt are each reviews
 			for (int i = 0; i < NUM_REVIEWS; i++) {
 				getline(infile, tempComment);
 				tempMovie.addReview(tempComment);
 			}
+			// After all the relevant data has been successfully read and added to the Movie object, the Movie is added
+			// to the vector of Movie objects.
 			movies.push_back(tempMovie);
 		}
 	} else {
-		// If the file can't be opened, the rest of the code can't execute.
+		// If the file can't be opened, the program should end
 		cout << "Error opening file.";
 		return 1;
 	}
