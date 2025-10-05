@@ -1,16 +1,16 @@
 Movie Name 1
-review 1
-review 2
-review 3
+comment 1
+comment 2
+comment 3
 Movie Name 2
-review 1
-review 2
-review 3
+comment 1
+comment 2
+comment 3
 Movie Name 3
-review 1
-review 2
-review 3
+comment 1
+comment 2
+comment 3
 Movie Name 4
-review 1
-review 2
-review 3
+comment 1
+comment 2
+comment 3

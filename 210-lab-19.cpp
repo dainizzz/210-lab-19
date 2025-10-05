@@ -1,8 +1,9 @@
 // COMSC-210 | Lab 19 | Dainiz Almazan
 // IDE used: CLion
 
-#include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <iostream>
 #include <random>
 #include <vector>
 using namespace std;
@@ -11,7 +12,7 @@ using namespace std;
 const int NUM_REVIEWS = 3;
 
 // Used to get a random double between 1 and 5 for the rating field in review Node
-uniform_real_distribution<double> distribution(1,5);
+uniform_real_distribution<double> distribution(1, 5);
 default_random_engine generator;
 
 struct Node {
@@ -22,11 +23,15 @@ struct Node {
 
 class Movie {
 	string title;
-	Node* reviewsHead;
+	Node *reviewsHead;
+
 public:
-	string getTitle() const { return title;}
-	Node* getReviews() const {return reviewsHead;}
-	void setTitle(string title) { this->title = title;}
+	// The default constructor sets the head node of the reviews linked list to nullptr
+	Movie() { reviewsHead = nullptr; }
+	string getTitle() const { return title; }
+	Node *getReviews() const { return reviewsHead; }
+	void setTitle(string title) { this->title = title; }
+
 	void addReview(string comment) {
 		Node *newNode = new Node();
 		newNode->comment = comment;
@@ -36,6 +41,7 @@ public:
 		// Setting reviewsHead to newNode so that the head pointer is pointing to the correct node
 		reviewsHead = newNode;
 	}
+
 	void displayMovieInfo() {
 		static int movieNum = 1;
 		cout << "MOVIE #" << movieNum++ << ":" << endl;
@@ -44,7 +50,8 @@ public:
 		Node *cur = reviewsHead;
 		int reviewNum = 1;
 		while (cur) {
-			cout << "\t> Review #" << reviewNum++ << ": " << cur->rating << ": " << cur->comment << endl;
+			cout << "\t> Review #" << reviewNum++ << ": " << setprecision(2) << cur->rating << ": " << cur->comment <<
+					endl;
 			cur = cur->next;
 		}
 	}
@@ -69,13 +76,14 @@ int main() {
 			}
 			movies.push_back(tempMovie);
 		}
-	}else { // If the file can't be opened, the rest of the code can't execute.
+	} else {
+		// If the file can't be opened, the rest of the code can't execute.
 		cout << "Error opening file.";
 		return 1;
 	}
 
-	cout << "Movie data added successfully. Outputting movie data..." << endl;
-	for (Movie movie : movies) {
+	cout << "Movie data added successfully! Outputting movie data..." << endl;
+	for (Movie movie: movies) {
 		movie.displayMovieInfo();
 	}
 
