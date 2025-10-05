@@ -2,8 +2,14 @@
 // IDE used: CLion
 
 #include <iostream>
+#include <fstream>
+#include <random>
 #include <vector>
 using namespace std;
+
+// Used to get a random double between 1 and 5 for the rating field in review Node
+uniform_real_distribution<double> distribution(1,5);
+default_random_engine generator;
 
 struct Node {
 	double rating;
@@ -19,10 +25,9 @@ public:
 	Node* getReviews() const {return reviewsHead;}
 	void setTitle(string title) { this->title = title;}
 	void addReview(string comment) {
-		// Creating a new Node with the values provided by the user
 		Node *newNode = new Node();
 		newNode->comment = comment;
-		newNode->rating; //the movie rating is a random double (1 decimal place) between 1.0 and 5.0
+		newNode->rating = distribution(generator);
 		// Setting newNode->next to reviewsHead to put newNode at the front of the linked list
 		newNode->next = reviewsHead;
 		// Setting reviewsHead to newNode so that the head pointer is pointing to the correct node
@@ -38,7 +43,14 @@ int main() {
 	// Initializing variables
 	vector<Movie> movies;
 
-	//TODO: Implement reading from file
+	ifstream infile;
+	infile.open("movieReviews.txt");
+	if (infile.good()) {
+
+	}else { // If the file can't be opened, the rest of the code can't execute.
+		cout << "Error opening file.";
+		return 1;
+	}
 
 	// lowercase chars are converted to uppercase in getUserChoice(), so only N is checked for
 	while (choice != 'N') {
