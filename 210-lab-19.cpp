@@ -37,13 +37,14 @@ public:
 		reviewsHead = newNode;
 	}
 	void displayMovieInfo() {
-		cout << "Movie title: " << title << endl;
+		static int movieNum = 1;
+		cout << "MOVIE #" << movieNum++ << ":" << endl;
+		cout << "Title: " << title << endl;
 		cout << "Movie reviews: " << endl;
 		Node *cur = reviewsHead;
-		int count = 0;
+		int reviewNum = 1;
 		while (cur) {
-			cout << "\t> Review #" << count + 1 << ": " << cur->rating << ": " << cur->comment << endl;
-			count++;
+			cout << "\t> Review #" << reviewNum++ << ": " << cur->rating << ": " << cur->comment << endl;
 			cur = cur->next;
 		}
 	}
@@ -51,13 +52,11 @@ public:
 
 
 int main() {
-	// automate code from lab 18 so that it reads comments from an external file and
-	// write a driver/demo program that has at least four Movie objects, each with at least 3 reviews
-
 	// Initializing variables
 	vector<Movie> movies;
 	string tempTitle, tempComment;
 
+	cout << "Reading movie data from file..." << endl;
 	ifstream infile;
 	infile.open("movieReviews.txt");
 	if (infile.good()) {
@@ -70,32 +69,15 @@ int main() {
 			}
 			movies.push_back(tempMovie);
 		}
-
-
-
-
 	}else { // If the file can't be opened, the rest of the code can't execute.
 		cout << "Error opening file.";
 		return 1;
 	}
 
-	// lowercase chars are converted to uppercase in getUserChoice(), so only N is checked for
-	while (choice != 'N') {
-		tempRating = getValidRating();
-		// Clearing stream before getline() is called in getValidComment();
-		cin.ignore();
-		tempComment = getValidComment();
-
-		if (listMethod == 1)
-			addNodeToHead(head, tempRating, tempComment);
-		else
-			addNodeToTail(head, tempRating, tempComment);
-
-		choice = getUserChoice();
+	cout << "Movie data added successfully. Outputting movie data..." << endl;
+	for (Movie movie : movies) {
+		movie.displayMovieInfo();
 	}
-
-	// TODO: Change this so it goes through the vector of Movie objects and then the reviews
-	cout << "Outputting all reviews:" << endl;
 
 
 	return 0;
