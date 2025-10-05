@@ -48,6 +48,7 @@ int main() {
 		choice = getUserChoice();
 	}
 
+	// TODO: Change this so it goes through the vector of Movie objects and then the reviews
 	cout << "Outputting all reviews:" << endl;
 	Node *cur = head;
 	int count = 0;
