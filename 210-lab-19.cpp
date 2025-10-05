@@ -11,7 +11,7 @@ using namespace std;
 // The text file has three reviews per movie
 const int NUM_REVIEWS = 3;
 
-// Used to get a random double between 1 and 5 for the rating field in review Node
+// Used to get a random double between 1 and 5 for the rating field in the review Nodes
 uniform_real_distribution<double> distribution(1, 5);
 default_random_engine generator;
 
@@ -25,16 +25,16 @@ class Movie {
 	// The default access specifier for classes is private, so private: isn't necessary here
 	string title;
 	Node *reviewsHead;
+
 public:
 	// The default constructor sets the head node of the reviews linked list to nullptr
 	Movie() { reviewsHead = nullptr; }
 
-	// Getters and setters
-	string getTitle() const { return title; }
-	Node *getReviews() const { return reviewsHead; }
+	// title is the only field that needs to be modified in the driver program
 	void setTitle(string title) { this->title = title; }
 
-	// No setter for reviewsHead since addReview() modifies that pointer as more nodes are added
+	// reviewsHead has no setter since it only needs to be modified when more nodes are added to the front of the linked
+	// list in addReview()
 	void addReview(string comment) {
 		Node *newNode = new Node();
 		newNode->comment = comment;
@@ -45,6 +45,7 @@ public:
 		reviewsHead = newNode;
 	}
 
+	// Because this fu
 	void displayMovieInfo() {
 		static int movieNum = 1;
 		cout << "Movie #" << movieNum++ << ": " << title << endl;
