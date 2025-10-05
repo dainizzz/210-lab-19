@@ -7,6 +7,9 @@
 #include <vector>
 using namespace std;
 
+// The text file has three reviews per movie
+const int NUM_REVIEWS = 3;
+
 // Used to get a random double between 1 and 5 for the rating field in review Node
 uniform_real_distribution<double> distribution(1,5);
 default_random_engine generator;
@@ -33,6 +36,17 @@ public:
 		// Setting reviewsHead to newNode so that the head pointer is pointing to the correct node
 		reviewsHead = newNode;
 	}
+	void displayMovieInfo() {
+		cout << "Movie title: " << title << endl;
+		cout << "Movie reviews: " << endl;
+		Node *cur = reviewsHead;
+		int count = 0;
+		while (cur) {
+			cout << "\t> Review #" << count + 1 << ": " << cur->rating << ": " << cur->comment << endl;
+			count++;
+			cur = cur->next;
+		}
+	}
 };
 
 
@@ -42,10 +56,23 @@ int main() {
 
 	// Initializing variables
 	vector<Movie> movies;
+	string tempTitle, tempComment;
 
 	ifstream infile;
 	infile.open("movieReviews.txt");
 	if (infile.good()) {
+		while (getline(infile, tempTitle)) {
+			Movie tempMovie;
+			tempMovie.setTitle(tempTitle);
+			for (int i = 0; i < NUM_REVIEWS; i++) {
+				getline(infile, tempComment);
+				tempMovie.addReview(tempComment);
+			}
+			movies.push_back(tempMovie);
+		}
+
+
+
 
 	}else { // If the file can't be opened, the rest of the code can't execute.
 		cout << "Error opening file.";
@@ -69,16 +96,7 @@ int main() {
 
 	// TODO: Change this so it goes through the vector of Movie objects and then the reviews
 	cout << "Outputting all reviews:" << endl;
-	Node *cur = head;
-	int count = 0;
-	double total = 0;
-	while (cur) {
-		cout << "\t> Review #" << count + 1 << ": " << cur->rating << ": " << cur->comment << endl;
-		count++;
-		total += cur->rating;
-		cur = cur->next;
-	}
-	cout << "\t> Average: " << total / count << endl;
+
 
 	return 0;
 }
